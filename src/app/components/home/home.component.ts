@@ -19,8 +19,23 @@ export class HomeComponent {
   //     console.log(data);
   //   });
   // }
+
+  nuevasCanciones: any [] = [];
+  loading: boolean;
+  error = false;
   constructor(private _spotify: SpotifyService){
-    this._spotify.getNewReleases();
+
+    this.loading = true;
+    this.error = false;
+    this._spotify.getNewReleases()
+    .subscribe((data:any)=>{
+        console.log(data);
+        this.nuevasCanciones = data;
+        this.loading = false;
+    },(err)=>{
+      this.error = true;
+      console.log(err);
+    });
   }
 
 
